@@ -6,8 +6,8 @@ function ransomAvail(note, magazine) {
   const magFreqs = freqCounter(magazine);
   const noteFreqs = freqCounter(note);
   for (let [char, freq] of noteFreqs) {
-    if (magFreqshas(char)) {
-      const magCharFreq = magFreqsget(char);
+    if (magFreqs.has(char)) {
+      const magCharFreq = magFreqs.get(char);
       if (magCharFreq < freq) return false;
     }
   }
@@ -15,9 +15,12 @@ function ransomAvail(note, magazine) {
 }
 
 function freqCounter(str) {
-  return Array.from(str).reduce(
-    (map, letter) => map.set(letter, (map.get(letter) || 0) + 1),
-    new Map()
-  );
+  return Array.from(str).reduce((map, letter) => {
+    if (letter !== " ") {
+      map.set(letter, (map.get(letter) || 0) + 1);
+    }
+    return map;
+  }, new Map());
 }
+
 ```
